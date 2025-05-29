@@ -60,7 +60,7 @@
       <div class="advanced-row"><label><input type="radio" name="hoverEffect" value="lighten" checked> Éclaircir</label><label><input type="radio" name="hoverEffect" value="darken"> Foncer</label></div>
       <div class="color-row">
         <div class="color-input"><label>Largeur du bouton</label><input type="text" id="buttonWidth" value="250px"></div>
-        <div class="color-input"><label>Hauteur du bouton</label><input type="text" id="buttonHeight" value="40px"></div>
+        <div class="color-input"><label>Hauteur du bouton</label><input type="text" id="buttonHeight" value="55px"></div>
       </div>
       <label>Border-radius du bouton</label><input type="text" id="borderRadius" value="4px">
       <label>Taille du texte du bouton</label><input type="text" id="buttonFontSize" value="20px">
@@ -123,6 +123,7 @@
   <style>
     html, body { margin:0; padding:0; height:100%; }
     @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Crimson+Pro:wght@400;700&display=swap');
+    .button_overlay_wrapper a { text-decoration: none; }
     .button_overlay_wrapper {
       width:100%; height:${blockH}; background-image:url('${bg}'); background-size:cover; ${blur}
       display:flex; justify-content:center; align-items:center; text-align:center; padding:0 16px; box-sizing:border-box;
