@@ -1,1 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Générateur de bouton Shorthand</title>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Red Hat Display', sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #f8f8f8;
+    }
+    h1 {
+      color: #d51D2C;
+    }
+    label {
+      font-weight: 700;
+      margin-top: 1rem;
+      display: block;
+    }
+    input[type="text"], input[type="url"] {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 100%;
+      margin-top: 0.25rem;
+    }
+    .row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .preview {
+      margin: 2rem 0;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      background: #fff;
+    }
+    textarea {
+      width: 100%;
+      height: 300px;
+      font-family: monospace;
+      font-size: 14px;
+      margin-top: 1rem;
+    }
+    button {
+      background-color: #D51D2C;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-family: 'Red Hat Display', sans-serif;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    button:hover {
+      background-color: #a71a26;
+    }
+  </style>
+</head>
+<body>
+  <h1>Générer un bouton Shorthand</h1>
+
+  <label>
+    <input type="checkbox" id="withBackground"> Utiliser une image de fond
+  </label>
+
+  <label>Lien URL du bouton</label>
+  <input type="url" id="url" placeholder="https://immersif.lescoops.ca/votre-projet-shorthand">
+
+  <label>Texte du bouton</label>
+  <input type="text" id="text" placeholder="Découvrir le reportage" value="Découvrir le reportage">
+
+  <label>Couleur du bouton</label>
+  <input type="text" id="btnColor" value="#D51D2C">
+
+  <label>Couleur du texte</label>
+  <input type="text" id="textColor" value="#ffffff">
+
+  <div id="bgImageInput" style="display: none;">
+    <label>Lien de l'image de fond</label>
+    <input type="url" id="bgImage" placeholder="https://cloudfront-us-east-1.images.arcpublishing.com/lescoopsdelinformation/id-unique-de-votre-image">
+  </div>
+
+  <button onclick="generateCode()">Générer le code</button>
+
+  <div class="preview" id="preview"></div>
+
+  <label>Code HTML</label>
+  <textarea id="codeOutput" readonly></textarea>
+  <button onclick="copyCode()">Copier le code</button>
+
+  <script>
+    const withBackground = document.getElementById('withBackground');
+    const bgImageInput = document.getElementById('bgImageInput');
+
+    withBackground.addEventListener('change', () => {
+      bgImageInput.style.display = withBackground.checked ? 'block' : 'none';
+    });
+
+    function generateCode() {
+      const url = document.getElementById('url').value;
+      const text = document.getElementById('text').value;
+      const btnColor = document.getElementById('btnColor').value;
+      const textColor = document.getElementById('textColor').value;
+      const bgImage = document.getElementById('bgImage').value;
+
+      let html = '';
+
+      if (withBackground.checked) {
+        html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Button Overlay</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&display=swap');
+    .button_overlay_wrapper {
+      width: 100%;
+      height: 305px;
+      background-image: url('${bgImage}');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Red Hat Display', sans-serif;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+    .button_overlay_wrapper .custom_button {
+      background-color: ${btnColor};
+      color: ${textColor};
+      padding: 8px 35px;
+      font-size: 20px;
+      font-family: 'Red Hat Display', sans-serif; 
+      border-radius: 13px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.4s;
+      white-space: nowrap;
+    }
+    .button_overlay_wrapper .custom_button:hover {
+      background-color: hsl(355, 75%, 60%);
+    }
+  </style>
+</head>
+<body>
+  <div class="button_overlay_wrapper">
+    <a href="${url}" target="_blank">
+      <button class="custom_button"><b>${text}</b></button>
+    </a>
+  </div>
+</body>
+</html>`;
+      } else {
+        html = `<!DOCTYPE html>
+<html>
+<head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&display=swap');
+body {
+  font-family: 'Red Hat Display', sans-serif;
+}
+.button_shorthand {
+  border: 0px solid #191919;
+  color: ${btnColor};
+  padding: 16px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 250px;
+  font-family: 'Red Hat Display', sans-serif;
+}
+.button_shorthand1 {
+  background-color: ${btnColor};
+  color: ${textColor};
+}
+.button_shorthand1:hover {
+  background-color: hsl(355, 75%, 60%);
+  color: ${textColor};
+}
+</style>
+</head>
+<body>
+<br>
+<div style="display: flex; justify-content: center;">
+  <a href="${url}" target="_blank">
+    <button class="button_shorthand button_shorthand1"><b>${text}</b></button>
+  </a>
+</div>
+<br><br>
+</body>
+</html>`;
+      }
+
+      document.getElementById('preview').innerHTML = html;
+      document.getElementById('codeOutput').value = html;
+    }
+
+    function copyCode() {
+      const code = document.getElementById('codeOutput');
+      code.select();
+      code.setSelectionRange(0, 99999);
+      document.execCommand('copy');
+      alert('Code copié dans le presse-papier!');
+    }
+  </script>
+</body>
+</html>
 
