@@ -5,36 +5,30 @@
   <title>Générateur de bouton Shorthand</title>
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Crimson+Pro:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Red Hat Display', sans-serif; max-width: 800px; margin: 2rem auto; padding: 1rem; background: #f8f8f8; }
-    h1 { color: #d51D2C; text-align: center; }
-    label { font-weight: 700; margin-top: 1rem; display: block; }
-    input[type="url"], input[type="text"], textarea { width: 100%; padding: 10px; font-size: 16px; border-radius: 6px; border: 1px solid #ccc; margin-top: 0.25rem; font-family: 'Red Hat Display', sans-serif; background: #fff; text-align: left; }
-    .editable { border: 1px solid #ccc; padding: 10px; border-radius: 6px; width: 100%; min-height: 50px; margin-top: 0.25rem; font-size: 16px; font-family: 'Red Hat Display', sans-serif; background: #fff; text-align: left; }
-    .editable[placeholder]:empty:before { content: attr(placeholder); color: #888; }
-    .color-row { display: flex; gap: 1rem; margin-top: 1rem; }
-    .color-input { flex: 1; display: flex; align-items: center; gap: 0.5rem; }
-    .color-input input[type="color"] { width: 40px; height: 40px; padding: 0; border: none; background: none; }
-    .color-input input[type="text"] { width: 100px; font-family: monospace; padding: 8px; background: #fff; }
-    #bgImageInput { display: none; margin-top: 1rem; }
-    #advancedOptions { display: none; margin-top: 1rem; padding: 1rem; background: #eee; border-radius: 6px; }
-    #advancedOptionsToggle { margin-top: 1rem; background: none; color: #d51D2C; border: none; cursor: pointer; text-decoration: underline; }
-    .format-buttons { margin-top: 0.5rem; text-align: left; }
-    .format-buttons button { margin-right: 0.5rem; padding: 4px 8px; font-family: inherit; font-size: 16px; }
-    button.generate, button.copy { background-color: #D51D2C; color: white; padding: 12px 20px; font-size: 16px; border-radius: 6px; border: none; cursor: pointer; margin-top: 1rem; font-family: 'Red Hat Display', sans-serif; }
-    button.generate:hover, button.copy:hover { background-color: #a71a26; }
-    .preview { margin: 2rem 0; padding: 1rem; border: 1px solid #ccc; background: #fff; display: flex; justify-content: center; align-items: center; }
-    .preview .button_overlay_wrapper { width: 100% !important; }
-    .preview .custom_button, .preview .button_shorthand { display: inline-flex; justify-content: center; align-items: center; }
-    textarea#codeOutput { width: 100%; height: 250px; font-family: monospace; margin-top: 1rem; text-align: left; }
-    .form-container { text-align: left !important; }
-    /* Default title styles */
-    .button_overlay_wrapper .overlay_title { font-weight: 700; font-size: 30px; margin-bottom: 20px; color: #000000; font-family: 'Red Hat Display', sans-serif; }
+    body { font-family: 'Red Hat Display', sans-serif; max-width:800px; margin:2rem auto; padding:1rem; background:#f8f8f8; }
+    h1 { color:#D51D2C; text-align:center; margin-bottom:2rem; }
+    label { display:block; font-weight:700; margin:1.5rem 0 0.5rem; }
+    input[type=checkbox] { vertical-align:middle; margin-right:0.5rem; }
+    input[type=color] { width:40px; height:40px; padding:0; border:none; }
+    input:not([type=checkbox]):not([type=color]), select, textarea { width:100%; padding:10px; font-size:16px; border:1px solid #ccc; border-radius:6px; background:#fff; }
+    .editable { border:1px solid #ccc; padding:10px; border-radius:6px; min-height:50px; }
+    .editable[placeholder]:empty:before { content:attr(placeholder); color:#888; }
+    .format-buttons { margin-top:0.5rem; }
+    .format-buttons button { width:40px; height:40px; margin-right:0.5rem; border:1px solid #ccc; border-radius:4px; background:#fff; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+    .color-row, .advanced-row { display:flex; gap:1rem; }
+    .color-input { flex:1; display:flex; align-items:center; gap:0.5rem; }
+    #advancedOptionsToggle { background:none; color:#D51D2C; border:none; text-decoration:underline; cursor:pointer; margin-top:1.5rem; }
+    #advancedOptions { display:none; background:#eee; padding:1rem; border-radius:6px; margin-top:1rem; }
+    button.generate, button.copy { background:#D51D2C; color:#fff; padding:12px 20px; border:none; border-radius:6px; cursor:pointer; margin-top:1rem; font-size:16px; }
+    button.generate:hover, button.copy:hover { background:#a71a26; }
+    iframe#previewFrame { width:100%; border:1px solid #ccc; border-radius:6px; margin:2rem 0; }
+    textarea#codeOutput { width:100%; height:250px; font-family:monospace; margin-top:1rem; white-space:pre; overflow:auto; line-height:1.4; }
   </style>
 </head>
 <body>
   <h1>Générateur de bouton Shorthand</h1>
   <div class="form-container">
-    <label><input type="checkbox" id="withBackground" onchange="toggleBackground()"> Utiliser une image de fond</label>
+    <label><input type="checkbox" id="withBackground" onchange="toggleBackground()">Utiliser une image de fond</label>
     <label>Lien URL du bouton</label>
     <input type="url" id="url" placeholder="https://immersif.lescoops.ca/votre-projet-shorthand">
     <label>Texte du bouton</label>
@@ -45,18 +39,10 @@
       <button onclick="applyFormatting('text','underline')"><u>S</u></button>
     </div>
     <div class="color-row">
-      <div class="color-input">
-        <label>Couleur du bouton</label>
-        <input type="color" id="btnColorPicker" value="#D51D2C" onchange="syncColor('btnColorPicker','btnColor')">
-        <input type="text" id="btnColor" value="#D51D2C" onchange="syncColor('btnColor','btnColorPicker')">
-      </div>
-      <div class="color-input">
-        <label>Couleur du texte</label>
-        <input type="color" id="textColorPicker" value="#ffffff" onchange="syncColor('textColorPicker','textColor')">
-        <input type="text" id="textColor" value="#ffffff" onchange="syncColor('textColor','textColorPicker')">
-      </div>
+      <div class="color-input"><label>Couleur du bouton</label><input type="color" id="btnColorPicker" value="#D51D2C" onchange="syncColor('btnColorPicker','btnColor')"><input type="text" id="btnColor" value="#D51D2C" onchange="syncColor('btnColor','btnColorPicker')"></div>
+      <div class="color-input"><label>Couleur du texte</label><input type="color" id="textColorPicker" value="#ffffff" onchange="syncColor('textColorPicker','textColor')"><input type="text" id="textColor" value="#ffffff" onchange="syncColor('textColor','textColorPicker')"></div>
     </div>
-    <div id="bgImageInput">
+    <div id="bgImageInput" style="display:none;">
       <label>Lien de l'image de fond</label>
       <input type="url" id="bgImage" placeholder="https://...">
       <label>Titre au-dessus du bouton</label>
@@ -69,143 +55,118 @@
     </div>
     <button id="advancedOptionsToggle" onclick="toggleAdvanced()">Afficher les options avancées</button>
     <div id="advancedOptions">
-      <label>Hauteur du bloc (ex: 305px)</label>
-      <input type="text" id="blockHeight" value="305px">
-      <label>Largeur du bouton (ex: 250px ou 100%)</label>
-      <input type="text" id="buttonWidth" value="250px">
-      <label>Border-radius du bouton</label>
-      <input type="text" id="borderRadius" value="4px">
-      <label>Taille du texte du bouton</label>
-      <input type="text" id="buttonFontSize" value="20px">
-      <label>Effet au survol</label>
-      <label><input type="radio" name="hoverEffect" value="lighten" checked> Éclaircir</label>
-      <label><input type="radio" name="hoverEffect" value="darken"> Foncer</label>
-      <label>Taille du titre (ex: 30px)</label>
-      <input type="text" id="titleFontSize" value="30px">
+      <label>Flou de l'image de fond (%)</label><input type="number" id="blurPercent" value="0" min="0" max="100">
+      <label>Hauteur du bloc (ex: 250px)</label><input type="text" id="blockHeight" value="250px">
+      <div class="advanced-row"><label><input type="radio" name="hoverEffect" value="lighten" checked> Éclaircir</label><label><input type="radio" name="hoverEffect" value="darken"> Foncer</label></div>
       <div class="color-row">
-        <div class="color-input">
-          <label>Police du titre</label>
-          <select id="titleFontFamily">
-            <option value="'Red Hat Display', sans-serif" style="font-family:'Red Hat Display',sans-serif">Red Hat Display</option>
-            <option value="'Crimson Pro', serif" style="font-family:'Crimson Pro',serif">Crimson Pro</option>
-          </select>
-        </div>
-        <div class="color-input">
-          <label>Couleur du titre</label>
-          <input type="color" id="titleColorPicker" value="#000000" onchange="syncColor('titleColorPicker','titleColor')">
-          <input type="text" id="titleColor" value="#000000" onchange="syncColor('titleColor','titleColorPicker')">
-        </div>
+        <div class="color-input"><label>Largeur du bouton</label><input type="text" id="buttonWidth" value="250px"></div>
+        <div class="color-input"><label>Hauteur du bouton</label><input type="text" id="buttonHeight" value="40px"></div>
       </div>
-      <label>Espacement titre-bouton (ex: 20px)</label>
-      <input type="text" id="titleSpacing" value="20px">
+      <label>Border-radius du bouton</label><input type="text" id="borderRadius" value="4px">
+      <label>Taille du texte du bouton</label><input type="text" id="buttonFontSize" value="20px">
+      <label>Taille du titre (ex: 30px)</label><input type="text" id="titleFontSize" value="30px">
+      <div class="color-row">
+        <div class="color-input"><label>Police du titre</label><select id="titleFontFamily"><option value="'Red Hat Display', sans-serif" style="font-family:'Red Hat Display',sans-serif;">Red Hat Display</option><option value="'Crimson Pro', serif" style="font-family:'Crimson Pro',serif;">Crimson Pro</option></select></div>
+        <div class="color-input"><label>Couleur du titre</label><input type="color" id="titleColorPicker" value="#000000" onchange="syncColor('titleColorPicker','titleColor')"><input type="text" id="titleColor" value="#000000" onchange="syncColor('titleColor','titleColorPicker')"></div>
+      </div>
+      <label>Espacement titre-bouton (ex: 20px)</label><input type="text" id="titleSpacing" value="20px">
     </div>
     <button class="generate" onclick="generateCode()">Générer le code</button>
   </div>
-  <div class="preview" id="preview"><!-- bouton stylé ici --></div>
-  <label>Code HTML</label>
-  <textarea id="codeOutput" readonly></textarea>
+  <label>Prévisualisation du bouton :</label>
+  <iframe id="previewFrame" sandbox style="height:250px"></iframe>
   <button class="copy" onclick="copyCode()">Copier le code</button>
+  <label>Code HTML</label>
+  <textarea id="codeOutput" wrap="off" readonly></textarea>
   <script>
-    function syncColor(src, dst) {
-      document.getElementById(dst).value = document.getElementById(src).value;
-    }
-    function toggleBackground() {
-      document.getElementById('bgImageInput').style.display = document.getElementById('withBackground').checked ? 'block' : 'none';
-    }
-    function toggleAdvanced() {
-      const adv = document.getElementById('advancedOptions');
-      const btn = document.getElementById('advancedOptionsToggle');
-      if (adv.style.display === 'block') {
-        adv.style.display = 'none';
-        btn.textContent = 'Afficher les options avancées';
-      } else {
-        adv.style.display = 'block';
-        btn.textContent = 'Cacher les options avancées';
-      }
-    }
-    function lightenColor(hex, percent) {
-      let r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-      r = Math.min(255,Math.floor(r + (255-r)*percent)).toString(16).padStart(2,'0');
-      g = Math.min(255,Math.floor(g + (255-g)*percent)).toString(16).padStart(2,'0');
-      b = Math.min(255,Math.floor(b + (255-b)*percent)).toString(16).padStart(2,'0');
-      return `#${r}${g}${b}`;
-    }
-    function darkenColor(hex, percent) {
-      let r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-      r = Math.max(0,Math.floor(r*(1-percent))).toString(16).padStart(2,'0');
-      g = Math.max(0,Math.floor(g*(1-percent))).toString(16).padStart(2,'0');
-      b = Math.max(0,Math.floor(b*(1-percent))).toString(16).padStart(2,'0');
-      return `#${r}${g}${b}`;
-    }
-    function applyFormatting(id, command) {
-      const el = document.getElementById(id);
-      el.focus();
-      document.execCommand(command, false, null);
-    }
-    function generateCode() {
-      const withBg = document.getElementById('withBackground').checked;
-      const url = document.getElementById('url').value;
-      const textHtml = document.getElementById('text').innerHTML;
-      const btnColor = document.getElementById('btnColor').value;
-      const textColor = document.getElementById('textColor').value;
-      const hoverEffect = document.querySelector('input[name="hoverEffect"]:checked').value;
-      const percent = 0.2;
-      const hoverColor = hoverEffect === 'darken' ? darkenColor(btnColor, percent) : lightenColor(btnColor, percent);
-      const bgImage = document.getElementById('bgImage').value;
-      const titleHtmlRaw = document.getElementById('overlayTitle').innerHTML;
-      const titleSpacing = document.getElementById('titleSpacing').value;
-      const titleFontSize = document.getElementById('titleFontSize').value;
-      const titleFontFamily = document.getElementById('titleFontFamily').value;
-      const titleColor = document.getElementById('titleColor').value;
-      const blockH = document.getElementById('blockHeight').value;
-      const bw = document.getElementById('buttonWidth').value;
-      const br = document.getElementById('borderRadius').value;
-      const fs = document.getElementById('buttonFontSize').value;
-      const titleHtml = titleHtmlRaw ? `<div class="overlay_title">${titleHtmlRaw}</div>` : '';
-      let styleTitle = `.button_overlay_wrapper .overlay_title { margin-bottom: ${titleSpacing}; font-size: ${titleFontSize}; font-family: ${titleFontFamily}; color: ${titleColor}; }`;
-      let fullHtml = '';
-      if (withBg) {
-        fullHtml = `<!DOCTYPE html>
+    function syncColor(src,dst){document.getElementById(dst).value=document.getElementById(src).value;}
+    function toggleBackground(){var bg=document.getElementById('bgImageInput'); bg.style.display=document.getElementById('withBackground').checked?'block':'none';}
+    function toggleAdvanced(){var adv=document.getElementById('advancedOptions'),btn=document.getElementById('advancedOptionsToggle'); if(adv.style.display==='block'){adv.style.display='none';btn.textContent='Afficher les options avancées';}else{adv.style.display='block';btn.textContent='Cacher les options avancées';}}
+    function applyFormatting(id,cmd){var el=document.getElementById(id); el.focus(); document.execCommand(cmd,false,null);}
+    function lightenColor(hex,pct){var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);r=Math.min(255,Math.floor(r+(255-r)*pct));g=Math.min(255,Math.floor(g+(255-g)*pct));b=Math.min(255,Math.floor(b+(255-b)*pct));return '#'+r.toString(16).padStart(2,'0')+g.toString(16).padStart(2,'0')+b.toString(16).padStart(2,'0');}
+    function darkenColor(hex,pct){var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);r=Math.max(0,Math.floor(r*(1-pct)));g=Math.max(0,Math.floor(g*(1-pct)));b=Math.max(0,Math.floor(b*(1-pct)));return '#'+r.toString(16).padStart(2,'0')+g.toString(16).padStart(2,'0')+b.toString(16).padStart(2,'0');}
+    function generateCode(){
+      var w=document.getElementById('withBackground').checked,
+          url=document.getElementById('url').value,
+          txt=document.getElementById('text').innerHTML,
+          btncol=document.getElementById('btnColor').value,
+          txtcol=document.getElementById('textColor').value,
+          he=document.querySelector('input[name="hoverEffect"]:checked').value,
+          hc=(he==='darken'?darkenColor(btncol,0.2):lightenColor(btncol,0.2)),
+          bg=document.getElementById('bgImage').value,
+          ttl=document.getElementById('overlayTitle').innerHTML,
+          ts=document.getElementById('titleSpacing').value,
+          tfs=document.getElementById('titleFontSize').value,
+          tff=document.getElementById('titleFontFamily').value,
+          tcol=document.getElementById('titleColor').value,
+          bl=document.getElementById('blurPercent').value,
+          blockH=document.getElementById('blockHeight').value,
+          btnH=document.getElementById('buttonHeight').value,
+          btnW=document.getElementById('buttonWidth').value,
+          br=document.getElementById('borderRadius').value,
+          fs=document.getElementById('buttonFontSize').value;
+      // Vérification padding minimal
+      var vertPad = w ? 16 : 32;
+      var minH = parseInt(fs) + vertPad;
+      var numH = parseInt(btnH);
+      if(numH < minH) { alert('⚠️ Hauteur minimale requise: '+minH+'px'); numH=minH; btnH=numH+'px'; document.getElementById('buttonHeight').value=btnH; }
+      // Construction HTML
+      var th = ttl ? '<div class="overlay_title" style="margin-bottom:'+ts+';font-size:'+tfs+';font-family:'+tff+';color:'+tcol+'">'+ttl+'</div>' : '';
+      var blur = w ? 'filter:blur('+bl+'px);' : '';
+      var fullHtml = '';
+      if(w) {
+        fullHtml =
+`<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <style>
+    html, body { margin:0; padding:0; height:100%; }
     @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Crimson+Pro:wght@400;700&display=swap');
-    .button_overlay_wrapper { width:100%; height:${blockH}; background-image:url('${bgImage}'); background-repeat:no-repeat; background-position:center; background-size:cover; display:flex; flex-direction:column; justify-content:center; align-items:center; font-family:'Red Hat Display',sans-serif; text-align:center; padding:0 16px; box-sizing:border-box; }
-    ${styleTitle}
-    .button_overlay_wrapper a { text-decoration:none; }
-    .button_overlay_wrapper .custom_button { background-color:${btnColor}; color:${textColor}; padding:8px 35px; font-size:${fs}; font-family:'Red Hat Display',sans-serif; border-radius:${br}; border:none; cursor:pointer; transition:background-color 0.4s; white-space:nowrap; width:${bw}; display:flex; justify-content:center; align-items:center; }
-    .button_overlay_wrapper .custom_button:hover { background-color:${hoverColor}; color:${textColor}; }
+    .button_overlay_wrapper {
+      width:100%; height:${blockH}; background-image:url('${bg}'); background-size:cover; ${blur}
+      display:flex; justify-content:center; align-items:center; text-align:center; padding:0 16px; box-sizing:border-box;
+    }
+    .custom_button {
+      background-color:${btncol}; color:${txtcol}; padding:8px 35px; font-size:${fs}; border-radius:${br}; border:none;
+      cursor:pointer; transition:background-color 0.4s; width:${btnW}; height:${btnH};
+      display:flex; justify-content:center; align-items:center; white-space:nowrap;
+    }
+    .custom_button:hover { background-color:${hc}; }
   </style>
 </head>
 <body>
   <div class="button_overlay_wrapper">
-    ${titleHtml}
-    <a href="${url}" target="_blank"><button class="custom_button">${textHtml}</button></a>
+    ${th}
+    <a href="${url}" target="_blank"><button class="custom_button">${txt}</button></a>
   </div>
 </body>
 </html>`;
       } else {
-        fullHtml = `<!DOCTYPE html>
+        fullHtml =
+`<!DOCTYPE html>
 <html>
 <head>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Crimson+Pro:wght@400;700&display=swap');
-    body { font-family:'Red Hat Display',sans-serif; text-align:center; }
-    .button_shorthand { border:0; padding:16px 16px; font-size:${fs}; border-radius:${br}; width:${bw}; display:inline-block; transition:background-color 0.4s; cursor:pointer; }
-    .button_shorthand1 { background-color:${btnColor}; color:${textColor}; }
-    .button_shorthand1:hover { background-color:${hoverColor}; color:${textColor}; }
+    html, body { margin:0; padding:0; height:100%; }
+    @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&display=swap');
+    body { display:flex; justify-content:center; align-items:center; font-family:'Red Hat Display',sans-serif; }
+    .button_shorthand { background-color:${btncol}; color:${txtcol}; padding:16px; font-size:${fs}; border-radius:${br};
+      width:${btnW}; height:${btnH}; border:none; cursor:pointer; transition:background-color 0.4s;
+      display:flex; justify-content:center; align-items:center; white-space:nowrap;
+    }
+    .button_shorthand:hover { background-color:${hc}; }
   </style>
 </head>
 <body>
-  <a href="${url}" target="_blank"><button class="button_shorthand button_shorthand1">${textHtml}</button></a>
+  <button class="button_shorthand" onclick="window.open('${url}','_blank')">${txt}</button>
 </body>
 </html>`;
       }
-      document.getElementById('preview').innerHTML = fullHtml;
-      document.getElementById('codeOutput').value = fullHtml;
+      var iframe=document.getElementById('previewFrame'); iframe.srcdoc=fullHtml; iframe.onload=function(){this.style.height=document.getElementById('blockHeight').value;};
+      document.getElementById('codeOutput').value=fullHtml;
     }
-    function copyCode() { const code= document.getElementById('codeOutput'); code.select(); document.execCommand('copy'); alert('Code copié !'); }
+    function copyCode(){var c=document.getElementById('codeOutput');c.select();document.execCommand('copy');alert('Code copié !');}
   </script>
 </body>
 </html>
