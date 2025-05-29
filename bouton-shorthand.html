@@ -17,7 +17,17 @@
     .format-buttons button { width:40px; height:40px; margin-right:0.5rem; border:1px solid #ccc; border-radius:4px; background:#fff; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
     .color-row, .advanced-row { display:flex; gap:1rem; }
     .color-input { flex:1; display:flex; align-items:center; gap:0.5rem; }
-    #advancedOptionsToggle { background:none; color:#D51D2C; border:none; text-decoration:underline; cursor:pointer; margin-top:1.5rem; }
+    #advancedOptionsToggle {
+      display: block;
+      background: none;
+      color: #D51D2C;
+      border: none;
+      text-decoration: underline;
+      cursor: pointer;
+      font: inherit;
+      margin-bottom: 1rem;
+      padding-top: 16px;
+    }
     #advancedOptions { display:none; background:#eee; padding:1rem; border-radius:6px; margin-top:1rem; }
     button.generate, button.copy { background:#D51D2C; color:#fff; padding:12px 20px; border:none; border-radius:6px; cursor:pointer; margin-top:1rem; font-size:16px; }
     button.generate:hover, button.copy:hover { background:#a71a26; }
