@@ -8,13 +8,13 @@
     body { font-family: 'Red Hat Display', sans-serif; max-width: 800px; margin: 2rem auto; padding: 1rem; background: #f8f8f8; }
     h1 { color: #d51D2C; text-align: center; }
     label { font-weight: 700; margin-top: 1rem; display: block; }
-    input[type="url"], input[type="text"], textarea { width: 100%; padding: 10px; font-size: 16px; border-radius: 6px; border: 1px solid #ccc; margin-top: 0.25rem; font-family: 'Red Hat Display', sans-serif; text-align: left; background: #fff; }
-    .editable { border: 1px solid #ccc; padding: 10px; border-radius: 6px; width: 100%; min-height: 50px; margin-top: 0.25rem; font-size: 16px; font-family: 'Red Hat Display', sans-serif; text-align: left; background: #fff; }
+    input[type="url"], input[type="text"], textarea { width: 100%; padding: 10px; font-size: 16px; border-radius: 6px; border: 1px solid #ccc; margin-top: 0.25rem; font-family: 'Red Hat Display', sans-serif; background: #fff; text-align: left; }
+    .editable { border: 1px solid #ccc; padding: 10px; border-radius: 6px; width: 100%; min-height: 50px; margin-top: 0.25rem; font-size: 16px; font-family: 'Red Hat Display', sans-serif; background: #fff; text-align: left; }
     .editable[placeholder]:empty:before { content: attr(placeholder); color: #888; }
     .color-row { display: flex; gap: 1rem; margin-top: 1rem; }
     .color-input { flex: 1; display: flex; align-items: center; gap: 0.5rem; }
     .color-input input[type="color"] { width: 40px; height: 40px; padding: 0; border: none; background: none; }
-    .color-input input[type="text"] { width: 100px; font-family: monospace; padding: 8px; text-align: left; background: #fff; }
+    .color-input input[type="text"] { width: 100px; font-family: monospace; padding: 8px; background: #fff; }
     #bgImageInput { display: none; margin-top: 1rem; }
     #advancedOptions { display: none; margin-top: 1rem; padding: 1rem; background: #eee; border-radius: 6px; }
     #advancedOptionsToggle { margin-top: 1rem; background: none; color: #d51D2C; border: none; cursor: pointer; text-decoration: underline; }
@@ -22,39 +22,21 @@
     .format-buttons button { margin-right: 0.5rem; padding: 4px 8px; font-family: inherit; font-size: 16px; }
     button.generate, button.copy { background-color: #D51D2C; color: white; padding: 12px 20px; font-size: 16px; border-radius: 6px; border: none; cursor: pointer; margin-top: 1rem; font-family: 'Red Hat Display', sans-serif; }
     button.generate:hover, button.copy:hover { background-color: #a71a26; }
-    .preview {
-      margin: 2rem 0;
-      padding: 1rem;
-      border: 1px solid #ccc;
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: left;
-    }
+    .preview { margin: 2rem 0; padding: 1rem; border: 1px solid #ccc; background: #fff; display: flex; justify-content: center; align-items: center; }
     .preview .button_overlay_wrapper { width: 100% !important; }
-    .preview .button_shorthand, .preview .button_shorthand1, .preview .custom_button { display: inline-flex; justify-content: center; align-items: center; }
+    .preview .custom_button, .preview .button_shorthand { display: inline-flex; justify-content: center; align-items: center; }
     textarea#codeOutput { width: 100%; height: 250px; font-family: monospace; margin-top: 1rem; text-align: left; }
     .form-container { text-align: left !important; }
     /* Default title styles */
-    .button_overlay_wrapper .overlay_title {
-      font-weight: 700;
-      font-size: 30px;
-      margin-bottom: 20px;
-      color: #000000;
-      font-family: 'Red Hat Display', sans-serif;
-    }
+    .button_overlay_wrapper .overlay_title { font-weight: 700; font-size: 30px; margin-bottom: 20px; color: #000000; font-family: 'Red Hat Display', sans-serif; }
   </style>
 </head>
 <body>
   <h1>Générateur de bouton Shorthand</h1>
   <div class="form-container">
-
     <label><input type="checkbox" id="withBackground" onchange="toggleBackground()"> Utiliser une image de fond</label>
-
     <label>Lien URL du bouton</label>
     <input type="url" id="url" placeholder="https://immersif.lescoops.ca/votre-projet-shorthand">
-
     <label>Texte du bouton</label>
     <div id="text" class="editable" contenteditable>Découvrir le reportage</div>
     <div class="format-buttons">
@@ -62,7 +44,6 @@
       <button onclick="applyFormatting('text','italic')"><i>I</i></button>
       <button onclick="applyFormatting('text','underline')"><u>S</u></button>
     </div>
-
     <div class="color-row">
       <div class="color-input">
         <label>Couleur du bouton</label>
@@ -75,11 +56,9 @@
         <input type="text" id="textColor" value="#ffffff" onchange="syncColor('textColor','textColorPicker')">
       </div>
     </div>
-
     <div id="bgImageInput">
       <label>Lien de l'image de fond</label>
       <input type="url" id="bgImage" placeholder="https://...">
-
       <label>Titre au-dessus du bouton</label>
       <div id="overlayTitle" class="editable" contenteditable placeholder="Titre du bloc (facultatif)"></div>
       <div class="format-buttons">
@@ -88,52 +67,44 @@
         <button onclick="applyFormatting('overlayTitle','underline')"><u>S</u></button>
       </div>
     </div>
-
     <button id="advancedOptionsToggle" onclick="toggleAdvanced()">Afficher les options avancées</button>
     <div id="advancedOptions">
       <label>Hauteur du bloc (ex: 305px)</label>
       <input type="text" id="blockHeight" value="305px">
-
       <label>Largeur du bouton (ex: 250px ou 100%)</label>
       <input type="text" id="buttonWidth" value="250px">
-
       <label>Border-radius du bouton</label>
       <input type="text" id="borderRadius" value="4px">
-
       <label>Taille du texte du bouton</label>
       <input type="text" id="buttonFontSize" value="20px">
-
       <label>Effet au survol</label>
       <label><input type="radio" name="hoverEffect" value="lighten" checked> Éclaircir</label>
       <label><input type="radio" name="hoverEffect" value="darken"> Foncer</label>
-
       <label>Taille du titre (ex: 30px)</label>
       <input type="text" id="titleFontSize" value="30px">
-
-      <label>Police du titre</label>
-      <select id="titleFontFamily">
-        <option value="'Red Hat Display', sans-serif">Red Hat Display</option>
-        <option value="'Crimson Pro', serif">Crimson Pro</option>
-      </select>
-
-      <label>Couleur du titre</label>
-      <input type="color" id="titleColorPicker" value="#000000" onchange="syncColor('titleColorPicker','titleColor')">
-      <input type="text" id="titleColor" value="#000000" onchange="syncColor('titleColor','titleColorPicker')">
-
+      <div class="color-row">
+        <div class="color-input">
+          <label>Police du titre</label>
+          <select id="titleFontFamily">
+            <option value="'Red Hat Display', sans-serif" style="font-family:'Red Hat Display',sans-serif">Red Hat Display</option>
+            <option value="'Crimson Pro', serif" style="font-family:'Crimson Pro',serif">Crimson Pro</option>
+          </select>
+        </div>
+        <div class="color-input">
+          <label>Couleur du titre</label>
+          <input type="color" id="titleColorPicker" value="#000000" onchange="syncColor('titleColorPicker','titleColor')">
+          <input type="text" id="titleColor" value="#000000" onchange="syncColor('titleColor','titleColorPicker')">
+        </div>
+      </div>
       <label>Espacement titre-bouton (ex: 20px)</label>
       <input type="text" id="titleSpacing" value="20px">
     </div>
-
     <button class="generate" onclick="generateCode()">Générer le code</button>
-
-  </div> <!-- .form-container -->
-
+  </div>
   <div class="preview" id="preview"><!-- bouton stylé ici --></div>
-
   <label>Code HTML</label>
   <textarea id="codeOutput" readonly></textarea>
   <button class="copy" onclick="copyCode()">Copier le code</button>
-
   <script>
     function syncColor(src, dst) {
       document.getElementById(dst).value = document.getElementById(src).value;
@@ -234,7 +205,7 @@
       document.getElementById('preview').innerHTML = fullHtml;
       document.getElementById('codeOutput').value = fullHtml;
     }
-    function copyCode() { const code = document.getElementById('codeOutput'); code.select(); code.setSelectionRange(0,99999); document.execCommand('copy'); alert('Code copié !'); }
+    function copyCode() { const code= document.getElementById('codeOutput'); code.select(); document.execCommand('copy'); alert('Code copié !'); }
   </script>
 </body>
 </html>
