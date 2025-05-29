@@ -115,12 +115,10 @@
           btnW=document.getElementById('buttonWidth').value,
           br=document.getElementById('borderRadius').value,
           fs=document.getElementById('buttonFontSize').value;
-      // Vérification padding minimal
       var vertPad = w ? 16 : 32;
       var minH = parseInt(fs) + vertPad;
       var numH = parseInt(btnH);
       if(numH < minH) { alert('⚠️ Hauteur minimale requise: '+minH+'px'); numH=minH; btnH=numH+'px'; document.getElementById('buttonHeight').value=btnH; }
-      // Construction HTML
       var th = ttl ? '<div class="overlay_title" style="margin-bottom:'+ts+';font-size:'+tfs+';font-family:'+tff+';color:'+tcol+'">'+ttl+'</div>' : '';
       var blur = w ? 'filter:blur('+bl+'px);' : '';
       var fullHtml = '';
@@ -133,16 +131,8 @@
   <style>
     html, body { margin:0; padding:0; height:100%; }
     @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Crimson+Pro:wght@400;700&display=swap');
-    .button_overlay_wrapper a { text-decoration: none; }
-    .button_overlay_wrapper {
-      width:100%; height:${blockH}; background-image:url('${bg}'); background-size:cover; ${blur}
-      display:flex; justify-content:center; align-items:center; text-align:center; padding:0 16px; box-sizing:border-box;
-    }
-    .custom_button {
-      background-color:${btncol}; color:${txtcol}; padding:8px 35px; font-size:${fs}; border-radius:${br}; border:none;
-      cursor:pointer; transition:background-color 0.4s; width:${btnW}; height:${btnH};
-      display:flex; justify-content:center; align-items:center; white-space:nowrap;
-    }
+    .button_overlay_wrapper { width:100%; height:${blockH}; background-image:url('${bg}'); background-size:cover; ${blur} display:flex; justify-content:center; align-items:center; text-align:center; padding:0 16px; box-sizing:border-box; }
+    .custom_button { background-color:${btncol}; color:${txtcol}; padding:8px 35px; font-size:${fs}; border-radius:${br}; border:none; cursor:pointer; transition:background-color 0.4s; width:${btnW}; height:${btnH}; display:flex; justify-content:center; align-items:center; white-space:nowrap; }
     .custom_button:hover { background-color:${hc}; }
   </style>
 </head>
@@ -162,10 +152,7 @@
     html, body { margin:0; padding:0; height:100%; }
     @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&display=swap');
     body { display:flex; justify-content:center; align-items:center; font-family:'Red Hat Display',sans-serif; }
-    .button_shorthand { background-color:${btncol}; color:${txtcol}; padding:16px; font-size:${fs}; border-radius:${br};
-      width:${btnW}; height:${btnH}; border:none; cursor:pointer; transition:background-color 0.4s;
-      display:flex; justify-content:center; align-items:center; white-space:nowrap;
-    }
+    .button_shorthand { background-color:${btncol}; color:${txtcol}; padding:16px; font-size:${fs}; border-radius:${br}; width:${btnW}; height:${btnH}; border:none; cursor:pointer; transition:background-color 0.4s; display:flex; justify-content:center; align-items:center; white-space:nowrap; }
     .button_shorthand:hover { background-color:${hc}; }
   </style>
 </head>
